@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 
 const initialProductList = [
@@ -8,6 +8,14 @@ const initialProductList = [
 ];
 
 const App = () => {
+  const [productList, setProductList] = useState(initialProductList)
+
+  const addQuantity = e => {
+    let newArr = [...productList]
+    newArr[e.target.id -1].quantity = e.target.value
+    setProductList(newArr)
+  }
+
   return (
     <div className='App'>
       <h1>Ma commande</h1>
@@ -21,11 +29,12 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-          {initialProductList.map(product => <tr>
-          <td>{product.name}</td>
-          <td>{product.price} €</td>
-          <td>{product.quantity}</td>
-          <td>{product.quantity * product.price}</td>
+          {productList.map(product => 
+          <tr key={product.id}>
+            <td>{product.name}</td>
+            <td>{product.price} €</td>
+            <td><input id={product.id} type="number" value={product.quantity} onChange={addQuantity}/></td>
+            <td>{product.quantity * product.price}</td>
           </tr>)}
         </tbody>
       </table>
