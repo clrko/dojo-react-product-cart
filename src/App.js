@@ -9,11 +9,13 @@ const initialProductList = [
 
 const App = () => {
   const [productList, setProductList] = useState(initialProductList)
-
+  const [totalPriceList, setTotalPriceList] = useState(initialProductList.map(product => product.price * product.quantity))
+  
   const addQuantity = e => {
     let newArr = [...productList]
     newArr[e.target.id -1].quantity = e.target.value
     setProductList(newArr)
+    setTotalPriceList(newArr.map(product => product.price * product.quantity))
   }
 
   return (
@@ -38,6 +40,8 @@ const App = () => {
           </tr>)}
         </tbody>
       </table>
+          <p>Montant de la commande: {totalPriceList.reduce((accumulator, currentValue) => accumulator + currentValue
+)}</p>
     </div>
   );
 }
