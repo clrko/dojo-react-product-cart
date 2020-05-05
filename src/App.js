@@ -12,12 +12,31 @@ const App = () => {
   const [totalPriceList, setTotalPriceList] = useState(initialProductList.map(product => product.price * product.quantity))
   
   const addQuantity = e => {
+    if (e.target.value === "0" || e.target.value === "") {
+      if (window.confirm("Etes-vous sûr de bien vouloir retirer ce produit de la liste ?")) {
+        let arr = [...productList]
+        console.log("productlist est", [...productList])
+        let index = arr.indexOf(e.target)
+        // console.log("e.target est", e.target.name)
+        console.log("index est", index)
+        arr.splice(index-1,1)
+        console.log("remove est", arr.splice(index-1,1))
+        setProductList(arr)
+        console.log(arr)
+      } else {
+        setProductList(productList)
+      }
+    } else if (e.target.value !== ""){
     let newArr = [...productList]
     newArr[e.target.id -1].quantity = e.target.value
     setProductList(newArr)
     setTotalPriceList(newArr.map(product => product.price * product.quantity))
+    }
+    // else {
+    //   e.preventDefault()
+    // }
   }
-
+  
   return (
     <div className='App'>
       <h1>Ma commande</h1>
