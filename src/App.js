@@ -76,9 +76,9 @@ const App = () => {
         </tbody>
       </table>
           <p>Montant de la commande: 
-          <span style={{ fontWeight: 'bold' }}> {totalPriceList.reduce((accumulator, currentValue) => accumulator + currentValue
-)}€</span></p>
-      
+          <span style={{ fontWeight: 'bold' }}> 
+          {totalPriceList.reduce((accumulator, currentValue) => accumulator + currentValue)}€
+          </span></p>
       <form onSubmit={addProduct}>
         <h2>Ajouter un produit</h2>
         <div className="field">
