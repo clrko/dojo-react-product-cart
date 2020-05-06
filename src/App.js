@@ -13,7 +13,8 @@ const App = () => {
   const [newProduct, setNewProduct] = useState({id:"", name: '', price:'', quantity:1 })
 
   const addQuantity = e => {
-      if (e.target.value === "0" || e.target.value === "") {
+      const newQuantity = e.target.value
+      if (newQuantity === "0" || newQuantity === "") {
         if (window.confirm("Etes-vous sûr de bien vouloir retirer ce produit de la liste ?")) {
           let arr = [...productList]
           let row = arr.find(f => f.name === e.target.name)
@@ -23,17 +24,20 @@ const App = () => {
         } else {
           setProductList(productList)
         } 
-      } else if (e.target.value !== "") {
+      } else if (newQuantity !== "") {
       let newArr = [...productList]
       let row = newArr.find(f => f.name === e.target.name)
-      row.quantity = parseInt(e.target.value)
+      row.quantity = parseInt(newQuantity)
       setProductList(newArr)
-      setTotalPriceList(newArr.map(product => product.price * product.quantity))
       }
   }
 
+  const onChange = e => {
+    setNewProduct({...newProduct, [e.target.name]:e.target.value})
+  }
+
   const addProduct = e => {
-    let tempIndex = Math.floor(Math.random() * 10) + 1
+    let tempIndex;
     while (productList.map(product => product.id).includes(tempIndex)) {
       tempIndex = Math.floor(Math.random() * 10)
     } 
@@ -44,18 +48,9 @@ const App = () => {
     setProductList(newArray)
   }
 
-  const onChange = e => {
-    if (e.target.name === 'name') {
-      setNewProduct({...newProduct, name: e.target.value})
-    } else if (e.target.name === 'price') {
-      setNewProduct({...newProduct, price: parseInt(e.target.value)})
-    }
-  }
-
   useEffect(()=>
-    {setTotalPriceList(productList.map(product => product.price * product.quantity))
-    },
-    [productList]
+    {setTotalPriceList(productList.map(product => product.price * product.quantity))}
+    ,[productList]
   )
 
   return (
@@ -88,11 +83,11 @@ const App = () => {
         <h2>Ajouter un produit</h2>
         <div className="field">
           <label htmlFor="name">Nom</label>
-          <input type='text' id="name" name="name" onChange={onChange} value={newProduct.name} ></input>
+          <input type='text' id="name" name="name" onChange={onChange} value={newProduct.name} required ></input>
         </div>
         <div className="field">
           <label htmlFor="price" >Prix</label>
-          <input type='number' id="price" name="price" onChange={onChange} value={newProduct.price} ></input>
+          <input type='number' id="price" name="price" onChange={onChange} value={newProduct.price} required ></input>
         </div>
         <button>Ajouter</button>
       </form>
