@@ -16,7 +16,7 @@ const App = () => {
       if (e.target.value === "0" || e.target.value === "") {
         if (window.confirm("Etes-vous sûr de bien vouloir retirer ce produit de la liste ?")) {
           let arr = [...productList]
-          let row = arr.find(f => f.id === parseInt(e.target.id))
+          let row = arr.find(f => f.name === e.target.name)
           arr = arr.filter(f => f !== row)
           setProductList(arr)
 
@@ -25,8 +25,8 @@ const App = () => {
         } 
       } else if (e.target.value !== "") {
       let newArr = [...productList]
-      let row = newArr.find(f => f.id === parseInt(e.target.id))
-      row.quantity = e.target.value
+      let row = newArr.find(f => f.name === e.target.name)
+      row.quantity = parseInt(e.target.value)
       // newArr[newArr.indexOf(row)].quantity = e.target.value
       setProductList(newArr)
       setTotalPriceList(newArr.map(product => product.price * product.quantity))
@@ -76,7 +76,7 @@ const App = () => {
           <tr key={product.id}>
             <td>{product.name}</td>
             <td>{product.price} €</td>
-            <td><input id={product.id} type="number" value={product.quantity} onChange={addQuantity}/></td>
+            <td><input id={product.id} type="number" name={product.name} value={product.quantity} onChange={addQuantity}/></td>
             <td>{product.quantity * product.price}</td>
           </tr>)}
         </tbody>
