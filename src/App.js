@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 
 const initialProductList = [
@@ -25,7 +25,9 @@ const App = () => {
         } 
       } else if (e.target.value !== "") {
       let newArr = [...productList]
-      newArr[e.target.id -1].quantity = e.target.value
+      let row = newArr.find(f => f.id === parseInt(e.target.id))
+      row.quantity = e.target.value
+      // newArr[newArr.indexOf(row)].quantity = e.target.value
       setProductList(newArr)
       setTotalPriceList(newArr.map(product => product.price * product.quantity))
       }
@@ -51,8 +53,12 @@ const App = () => {
     }
   }
 
+  useEffect(()=>
+    {setTotalPriceList(productList.map(product => product.price * product.quantity))
+    },
+    [productList]
+  )
 
-  
   return (
     <div className='App'>
       <h1>Ma commande</h1>
