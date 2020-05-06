@@ -27,7 +27,6 @@ const App = () => {
       let newArr = [...productList]
       let row = newArr.find(f => f.name === e.target.name)
       row.quantity = parseInt(e.target.value)
-      // newArr[newArr.indexOf(row)].quantity = e.target.value
       setProductList(newArr)
       setTotalPriceList(newArr.map(product => product.price * product.quantity))
       }
